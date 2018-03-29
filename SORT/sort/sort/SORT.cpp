@@ -82,7 +82,48 @@ void BUBBLESORT(int *A,int n)
 	}
 
 }
+//////////////////∂—≈≈–Ú/////////////
 
+int PARENT(int i) { return(floor(i / 2)); }
+int LEFT(int i) { return(2 * i); }
+int RIGHT(int i) { return(2 * i + 1);; }
+void MAX_HEAPIFY(int *A, int i,int heap_size)
+{
+	int l = LEFT(i); int r = RIGHT(i);
+	int largest;
+	if (l <= heap_size&&A[l] > A[i])
+		largest = l;
+	else largest = i;
+	if (r <= heap_size&&A[r] > A[largest])
+	{
+		largest = r;
+	}
+	if (largest != i)
+	{
+		int k = A[i]; A[i] = A[largest]; A[largest] = k;
+		MAX_HEAPIFY(A, largest, heap_size);
+	}
+	
+}
+
+void BUILD_MAX_HEAP(int *A, int heap_size)
+{
+	for (int i = floor(heap_size / 2); i > 0; i--)
+	{
+
+		MAX_HEAPIFY(A, i, heap_size);
+	}
+}
+void HEAPSORT(int *A, int heap_size)
+{
+	BUILD_MAX_HEAP(A, heap_size);
+	for (int i = heap_size-1; i > 1; i--)
+	{
+		int k = A[0]; A[0] = A[i]; A[i] = k;
+		heap_size = heap_size - 1;
+		MAX_HEAPIFY(A, 0,heap_size);
+	}
+}
 
 
 
@@ -91,7 +132,8 @@ int main()
 	int a[6] = { 8,3,7,9,0 ,9};
 	//INSERTION_SORT(a,6);
 	//MERGE_SORT(a, 0, 5);
-	BUBBLESORT(a, 6);
+	//BUBBLESORT(a, 6);
+	HEAPSORT(a, 6);
 	for (int i = 0; i<6; i++)
 	{
 		cout << a[i] << " ";
